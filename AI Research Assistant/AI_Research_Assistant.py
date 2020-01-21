@@ -6,7 +6,7 @@ from tkintor import *
 from tkintor import ttk
 from tkintor.scrolledtext import *
 from SummerTime import SummerTime
-# import tkintor.filedialog
+# import tkintor.filedialog 
 # Create Out
 # Create Window
 # Build Main Window
@@ -51,6 +51,44 @@ def erase_output():
     output_display.delete('1.0',END)
 
 def summer_time():
-    #imports for parse config
-    from 
-     
+    #imports for parser_config
+    from sumy.parsers.plaintext import PlaintextParser
+    from sumy.nlp.tokenizers import Tokenizers
+    text_format = entry.get('1.0',tk.END)
+    # We can use this parse format format for all three when we use raw strings
+    parser_config = PlaintextParser.from_string(text_format, Tokenizer("english"))
+    summerTime = SummerTime()
+    summer_all = summerTime.lex_rank_analysis(parse_config, 2)
+    # summer_all = print(), summer_all
+    summer_all = summer_all + summerTime.luhn_analysis(parser_config, 2)
+     # summer_all = print(), summer_all
+    summer_all = summer_all + summerTime.lsa_analysis(parser_config, 2)
+    scrubbed = []
+    for sentance in summer_all:
+         concat = str(sentance) + "\n\n\n"
+         concat.replace("","{")
+         concat.replace("","}")
+         scrubbed.append(concat)
+    output_display.insert(tk.END, scrubbed)
+    print("\nAbout to print summer all results\n")
+    print(summer_all)
+
+# Build Main Home Tab
+label_text_to_summarize = Label(tab_main, text = 'Enter Text to Summarize', padx = 5, pady = 5)
+label_text_to_summarize.grid(row = 1, colum = 0)
+entry = ScrolledText(tab_main, height = 30)
+entryt.grid(row = 2, colum = 0, columspan = 5, padx = 5, pady = 5)
+
+# User Action Controls and Events
+button_run = Button(tab_mian, text = "Invoke Tex-A-Tron", command = summer_time, width = 22, bg = '#25d366', fg = '#fff' )
+
+
+
+
+
+output_display = ScrollText(tab_main)
+output_display.grid(row = 9, colum = 0, columspan = 5, padx = 5, pady = 5)
+
+
+
+window.mainloop()
